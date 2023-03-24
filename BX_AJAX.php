@@ -6,16 +6,18 @@ $APPLICATION->SetTitle("AJAX");
 //подключение ядро Bitrix и расширение AJAX
 CJSCore::Init(array('ajax'));
 $sidAjax = 'testAjax';
-if(isset($_REQUEST['ajax_form']) && $_REQUEST['ajax_form'] === $sidAjax){
-    $GLOBALS['APPLICATION']->RestartBuffer();
-    echo CUtil::PhpToJSObject(array(
+//проверка на наличие в запросе элемента 'ajax_form' и содержимого этого элемента-задано в переменной
+if(isset($_REQUEST['ajax_form']) && $_REQUEST['ajax_form'] === $sidAjax){//если true
+    $GLOBALS['APPLICATION']->RestartBuffer();//очистка буфера перед выводом данных для вывода результата без шапки и футера
+    echo CUtil::PhpToJSObject(array(//пишем Hello, ошибок нет
         'RESULT' => 'HELLO',
         'ERROR' => ''
     ));
-    die();
+    die();//выход
 }
 
 ?>
+//если запрос еще не был отправлен, показ страницы
 <div class="group">
     <div id="block"></div >
     <div id="process">wait ... </div >
